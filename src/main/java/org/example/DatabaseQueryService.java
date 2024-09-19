@@ -5,10 +5,7 @@ import org.example.JavaClassForDbScript.*;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,11 +71,11 @@ public class DatabaseQueryService {
     }
 
     public ResultSet getResutSet(Connection conn, String script) throws SQLException {
-        Statement stmt = conn.createStatement();
+        PreparedStatement preparedStatement = conn.prepareStatement(getCurrentTable());
             for (String sql : script.split(";")) {
                 if (!sql.trim().isEmpty()) {
-                    stmt.execute(getCurrentTable());
-                    return stmt.executeQuery(sql);
+                  preparedStatement.execute();
+                 return preparedStatement.executeQuery(sql);
                 }
             }
 

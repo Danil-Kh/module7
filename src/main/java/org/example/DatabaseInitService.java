@@ -15,10 +15,9 @@ public class DatabaseInitService {
     public static void main(String[] args) throws SQLException, IOException {
         String script = getScript();
             try(Connection conn = Databese.getConnection()){
-                Statement stmt = conn.createStatement();
                 for (String sql : script.split(";")) {
                    if (!sql.trim().isEmpty()) {
-                       stmt.execute(sql);
+                       conn.prepareStatement(sql).execute();
                    }
                }
 
@@ -27,7 +26,7 @@ public class DatabaseInitService {
 
         }
         private static String getScript() throws IOException {
-            final String script = new String(Files.readAllBytes(Path.of("C:\\Java programs\\module6\\src\\main\\java\\org\\example\\utils\\init_db.sql")));
+            final String script = new String(Files.readAllBytes(Path.of("src/main/java/org/example/utils/init_db.sql")));
             return script;
         }
     }
