@@ -1,0 +1,5 @@
+SELECT NAME, SALARY
+FROM megasofttest12.worker1
+WHERE SALARY = (SELECT MAX(SALARY) FROM worker1);
+
+
